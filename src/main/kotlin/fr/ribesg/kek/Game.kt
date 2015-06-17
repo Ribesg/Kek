@@ -70,7 +70,7 @@ class Game {
 
             // Graphics
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
-            gl(GL11.GL_TRIANGLES) {
+            gl {
                 GL11.glColor3f(1f, 0f, 0f)
                 GL11.glVertex2f(-.5f, -.5f)
 
