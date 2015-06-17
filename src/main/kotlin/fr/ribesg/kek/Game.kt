@@ -31,7 +31,7 @@ class Game {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GL11.GL_FALSE)
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GL11.GL_TRUE)
 
-        this.window = GLFW.glfwCreateWindow(Screen.WIDTH, Screen.HEIGHT, "Hello World!", NULL, NULL)
+        this.window = GLFW.glfwCreateWindow(Screen.WIDTH, Screen.HEIGHT, Screen.TITLE, NULL, NULL)
         if (window == NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
@@ -72,6 +72,8 @@ class Game {
 
             GLFW.glfwSwapBuffers(window)
 
+            GLFW.glfwSetWindowTitle(window, Screen.TITLE + " - FPS: " + Timer.fps)
+
             GLFW.glfwPollEvents()
         }
     }
@@ -85,4 +87,5 @@ class Game {
             errorCallback.release()
         }
     }
+
 }

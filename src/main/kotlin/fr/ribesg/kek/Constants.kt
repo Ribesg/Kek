@@ -7,4 +7,5 @@ package fr.ribesg.kek
 object Screen {
     val WIDTH: Int = 1280
     val HEIGHT: Int = 768
+    val TITLE: String = "Kek"
 }
