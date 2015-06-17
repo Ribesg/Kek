@@ -1,7 +1,6 @@
 package fr.ribesg.kek
 
-import fr.ribesg.kek.Game
-
 fun main(args: Array<String>) {
+    System.setProperty("org.lwjgl.librarypath", "lwjgl3/lwjgl/native")
     Game().run()
 }

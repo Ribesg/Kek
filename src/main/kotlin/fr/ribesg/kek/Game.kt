@@ -14,13 +14,9 @@ class Game {
     var window: Long by Delegates.notNull()
 
     fun run() {
-        try {
-            init()
-            loop()
-            dispose()
-        } finally {
-            System.exit(0)
-        }
+        init()
+        loop()
+        dispose()
     }
 
     fun init() {
