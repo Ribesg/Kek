@@ -64,6 +64,7 @@ class Game {
         GLContext.createFromCurrent()
 
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        GL11.glPointSize(5f)
 
         while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
             val delta = Timer.getDelta()
@@ -78,7 +79,11 @@ class Game {
                 GL11.glVertex2f(.5f, -.5f)
 
                 GL11.glColor3f(0f, 0f, 1f)
-                GL11.glVertex2f(0f, .5f)
+                GL11.glVertex2f(0f, .75f)
+            }
+            gl(GL11.GL_POINTS) {
+                GL11.glColor3f(1f, 1f, 1f)
+                GL11.glVertex2f(0f, 0f)
             }
             GLFW.glfwSwapBuffers(window)
 
