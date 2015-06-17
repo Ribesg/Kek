@@ -67,13 +67,26 @@ class Game {
 
         while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
             val delta = Timer.getDelta()
-            Timer.update()
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
 
+            // Graphics
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
+            gl(GL11.GL_TRIANGLES) {
+                GL11.glColor3f(1f, 0f, 0f)
+                GL11.glVertex2f(-.5f, -.5f)
+
+                GL11.glColor3f(0f, 1f, 0f)
+                GL11.glVertex2f(.5f, -.5f)
+
+                GL11.glColor3f(0f, 0f, 1f)
+                GL11.glVertex2f(0f, .5f)
+            }
             GLFW.glfwSwapBuffers(window)
 
+            // FPS
+            Timer.update()
             GLFW.glfwSetWindowTitle(window, Screen.TITLE + " - FPS: " + Timer.fps)
 
+            // Input
             GLFW.glfwPollEvents()
         }
     }
