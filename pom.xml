@@ -10,9 +10,7 @@
 
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <kotlin.version>0.12.412</kotlin.version>
-      <natives>${basedir}/target/natives/</natives>
-      <release.natives>natives/</release.natives>
+      <kotlin.version>0.12.613</kotlin.version>
       <mainClass>fr.ribesg.kek.KekPackage</mainClass>
    </properties>
 
@@ -86,20 +84,6 @@
                      </artifactSet>
                      <minimizeJar>true</minimizeJar>
                   </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
-            <groupId>com.googlecode.mavennatives</groupId>
-            <artifactId>maven-nativedependencies-plugin</artifactId>
-            <version>0.0.7</version>
-            <executions>
-               <execution>
-                  <id>unpacknatives</id>
-                  <phase>generate-resources</phase>
-                  <goals>
-                     <goal>copy</goal>
-                  </goals>
                </execution>
             </executions>
          </plugin>
