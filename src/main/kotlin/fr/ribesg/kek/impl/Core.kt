@@ -1,25 +1,46 @@
-package fr.ribesg.kek
+package fr.ribesg.kek.impl
 
+import fr.ribesg.kek.api.Config
+import fr.ribesg.kek.api.Game
 import org.lwjgl.glfw.*
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GLContext
 import org.lwjgl.system.MemoryUtil.NULL
 import kotlin.properties.Delegates
 
-class Game {
+/**
+ * The engine's Core.
+ *
+ * @author Ribesg
+ */
+object Core {
 
-    var errorCallback: GLFWErrorCallback by Delegates.notNull()
-    var keyCallback: GLFWKeyCallback by Delegates.notNull()
+    // GLFW Callbacks
+    private var errorCallback: GLFWErrorCallback by Delegates.notNull()
+    private var keyCallback: GLFWKeyCallback by Delegates.notNull()
 
-    var window: Long by Delegates.notNull()
+    // Our Window
+    private var window: Long by Delegates.notNull()
 
-    fun run() {
+    // The Game
+    private var game: Game by Delegates.notNull()
+
+    /**
+     * Called by [Game.run()], runs [init()], [loop()] then [end()].
+     */
+    fun run(game: Game) {
+        this.game = game
+
         init()
         loop()
-        dispose()
+        end()
     }
 
+    /**
+     * Initializes the Core.
+     */
     fun init() {
+        // GLFW, LWJGL, OpenGL stuff
         errorCallback = Callbacks.errorCallbackPrint(System.err)
         GLFW.glfwSetErrorCallback(errorCallback)
 
@@ -31,7 +52,7 @@ class Game {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GL11.GL_FALSE)
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GL11.GL_TRUE)
 
-        this.window = GLFW.glfwCreateWindow(Screen.WIDTH, Screen.HEIGHT, Screen.TITLE, NULL, NULL)
+        this.window = GLFW.glfwCreateWindow(Config.Screen.WIDTH, Config.Screen.HEIGHT, Config.Screen.BASE_TITLE, NULL, NULL)
         if (window == NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
@@ -45,11 +66,11 @@ class Game {
         }
         GLFW.glfwSetKeyCallback(window, keyCallback)
 
-        val vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
+        val videoMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
         GLFW.glfwSetWindowPos(
             window,
-            (GLFWvidmode.width(vidmode) - Screen.WIDTH) / 2,
-            (GLFWvidmode.height(vidmode) - Screen.HEIGHT) / 2
+            (GLFWvidmode.width(videoMode) - Config.Screen.WIDTH) / 2,
+            (GLFWvidmode.height(videoMode) - Config.Screen.HEIGHT) / 2
         );
 
         GLFW.glfwMakeContextCurrent(window)
@@ -57,50 +78,48 @@ class Game {
 
         GLFW.glfwShowWindow(window)
 
+        // Timer and Game initialization
         Timer.init()
+        game.init()
     }
 
+    /**
+     * Runs the main game loop.
+     */
     fun loop() {
         GLContext.createFromCurrent()
 
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-        GL11.glPointSize(5f)
 
         while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
-            val delta = Timer.getDelta()
 
-            // Graphics
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
-            gl {
-                GL11.glColor3f(1f, 0f, 0f)
-                GL11.glVertex2f(-.5f, -.5f)
-
-                GL11.glColor3f(0f, 1f, 0f)
-                GL11.glVertex2f(.5f, -.5f)
-
-                GL11.glColor3f(0f, 0f, 1f)
-                GL11.glVertex2f(0f, .75f)
-            }
-            gl(GL11.GL_POINTS) {
-                GL11.glColor3f(1f, 1f, 1f)
-                GL11.glVertex2f(0f, 0f)
-            }
-            GLFW.glfwSwapBuffers(window)
+            // Update game
+            GLFW.glfwPollEvents()
+            game.update(Timer.getDelta())
 
             // FPS
             Timer.update()
-            GLFW.glfwSetWindowTitle(window, Screen.TITLE + " - FPS: " + Timer.fps)
+            GLFW.glfwSetWindowTitle(window, Config.Screen.BASE_TITLE + " - FPS: " + Timer.fps)
 
-            // Input
-            GLFW.glfwPollEvents()
+            // Graphics
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
+            game.render()
+            GLFW.glfwSwapBuffers(window)
         }
     }
 
-    fun dispose() {
+    /**
+     * Frees resources.
+     */
+    fun end() {
+        game.end()
+
         try {
+            // Destroy window
             GLFW.glfwDestroyWindow(window)
             keyCallback.release()
         } finally {
+            // Stop GLFW entirely
             GLFW.glfwTerminate()
             errorCallback.release()
         }

@@ -1,4 +1,4 @@
-package fr.ribesg.kek
+package fr.ribesg.kek.impl
 
 import org.lwjgl.glfw.GLFW
 
