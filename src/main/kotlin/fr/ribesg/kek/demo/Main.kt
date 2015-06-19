@@ -1,6 +1,4 @@
-package fr.ribesg.kek.test
-
-import fr.ribesg.kek.test.DemoGame
+package fr.ribesg.kek.demo
 
 fun main(args: Array<String>) {
     // Set path to LWJGL3 natives

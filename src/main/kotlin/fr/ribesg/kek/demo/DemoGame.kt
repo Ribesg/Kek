@@ -1,4 +1,4 @@
-package fr.ribesg.kek.test
+package fr.ribesg.kek.demo
 
 import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
