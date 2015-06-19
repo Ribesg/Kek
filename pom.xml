@@ -11,7 +11,7 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <kotlin.version>0.12.613</kotlin.version>
-      <mainClass>fr.ribesg.kek.KekPackage</mainClass>
+      <mainClass>fr.ribesg.kek.demo.DemoPackage</mainClass>
    </properties>
 
    <repositories>
