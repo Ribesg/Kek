@@ -1,14 +1,21 @@
 package fr.ribesg.kek.demo
 
+import fr.ribesg.kek.api.Config
 import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
 import fr.ribesg.kek.gl
 import org.lwjgl.opengl.GL11
 
 /**
+ * A demonstration Game.
+ *
  * @author Ribesg
  */
 public class DemoGame : Game() {
+
+    override fun configure() {
+        Config.Window.BASE_TITLE = "DemoGame"
+    }
 
     override fun init() {
         // Draw a rainbow triangle

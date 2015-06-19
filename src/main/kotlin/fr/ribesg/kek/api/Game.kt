@@ -1,20 +1,24 @@
 package fr.ribesg.kek.api
 
-import fr.ribesg.kek.api.gfx.Entity
+import fr.ribesg.kek.api.gfx.Layer
 import fr.ribesg.kek.impl.Core
-import java.util.LinkedList
 
 /**
  * Game using the engine should implement this interface.
  *
+ * The Game class acts as the main [Layer] which will be
+ * updated and rendered by the engine.
+ *
  * @author Ribesg
  */
-public abstract class Game {
+public abstract class Game : Layer() {
 
     /**
-     * Entities in this Game.
+     * Configures this Game.
+     *
+     * This is the only place where values in [Config] can be modified.
      */
-    protected val entities: MutableList<Entity> = LinkedList()
+    public open fun configure(): Unit = Unit
 
     /**
      * Initializes this Game.
@@ -22,22 +26,6 @@ public abstract class Game {
      * Here we can populate our entities and do any initialization.
      */
     public open fun init(): Unit = Unit
-
-    /**
-     * Updates this Game.
-     *
-     * The default implementation simply updates all the entities.
-     */
-    public open fun update(delta: Float): Unit =
-        entities.forEach { e -> e.update(delta) }
-
-    /**
-     * Renders this Game.
-     *
-     * The default implementation simply renders all the entities.
-     */
-    public open fun render(): Unit =
-        entities.forEach(Entity::render)
 
     /**
      * Ends this Game.

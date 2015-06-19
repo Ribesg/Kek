@@ -40,6 +40,9 @@ object Core {
      * Initializes the Core.
      */
     fun init() {
+        // Game configuration
+        game.configure()
+
         // GLFW, LWJGL, OpenGL stuff
         errorCallback = Callbacks.errorCallbackPrint(System.err)
         GLFW.glfwSetErrorCallback(errorCallback)
@@ -52,7 +55,7 @@ object Core {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GL11.GL_FALSE)
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GL11.GL_TRUE)
 
-        this.window = GLFW.glfwCreateWindow(Config.Screen.WIDTH, Config.Screen.HEIGHT, Config.Screen.BASE_TITLE, NULL, NULL)
+        this.window = GLFW.glfwCreateWindow(Config.Window.WIDTH, Config.Window.HEIGHT, Config.Window.BASE_TITLE, NULL, NULL)
         if (window == NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
@@ -69,8 +72,8 @@ object Core {
         val videoMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
         GLFW.glfwSetWindowPos(
             window,
-            (GLFWvidmode.width(videoMode) - Config.Screen.WIDTH) / 2,
-            (GLFWvidmode.height(videoMode) - Config.Screen.HEIGHT) / 2
+            (GLFWvidmode.width(videoMode) - Config.Window.WIDTH) / 2,
+            (GLFWvidmode.height(videoMode) - Config.Window.HEIGHT) / 2
         );
 
         GLFW.glfwMakeContextCurrent(window)
@@ -98,7 +101,7 @@ object Core {
 
             // FPS
             Timer.update()
-            GLFW.glfwSetWindowTitle(window, Config.Screen.BASE_TITLE + " - FPS: " + Timer.fps)
+            GLFW.glfwSetWindowTitle(window, Config.Window.BASE_TITLE + " - FPS: " + Timer.fps)
 
             // Graphics
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
