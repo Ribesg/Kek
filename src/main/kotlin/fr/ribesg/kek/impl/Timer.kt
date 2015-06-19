@@ -1,6 +1,6 @@
 package fr.ribesg.kek.impl
 
-import org.lwjgl.glfw.GLFW
+import org.lwjgl.glfw.GLFW.glfwGetTime
 
 /**
  * @author Ribesg
@@ -19,7 +19,7 @@ object Timer {
         lastLoopTime = getTime()
     }
 
-    fun getTime(): Double = GLFW.glfwGetTime()
+    fun getTime(): Double = glfwGetTime()
 
 
     fun getDelta(): Float {

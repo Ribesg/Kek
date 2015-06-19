@@ -2,8 +2,12 @@ package fr.ribesg.kek.impl
 
 import fr.ribesg.kek.api.Config
 import fr.ribesg.kek.api.Game
-import org.lwjgl.glfw.*
-import org.lwjgl.opengl.GL11
+import org.lwjgl.glfw.Callbacks
+import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.glfw.GLFWErrorCallback
+import org.lwjgl.glfw.GLFWKeyCallback
+import org.lwjgl.glfw.GLFWvidmode
+import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import org.lwjgl.system.MemoryUtil.NULL
 import kotlin.properties.Delegates
@@ -45,41 +49,41 @@ object Core {
 
         // GLFW, LWJGL, OpenGL stuff
         errorCallback = Callbacks.errorCallbackPrint(System.err)
-        GLFW.glfwSetErrorCallback(errorCallback)
+        glfwSetErrorCallback(errorCallback)
 
-        if (GLFW.glfwInit() != GL11.GL_TRUE) {
+        if (glfwInit() != GL_TRUE) {
             throw IllegalStateException("Unable to initialize GLFW")
         }
 
-        GLFW.glfwDefaultWindowHints()
-        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GL11.GL_FALSE)
-        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GL11.GL_TRUE)
+        glfwDefaultWindowHints()
+        glfwWindowHint(GLFW_VISIBLE, GL_FALSE)
+        glfwWindowHint(GLFW_RESIZABLE, GL_TRUE)
 
-        this.window = GLFW.glfwCreateWindow(Config.Window.WIDTH, Config.Window.HEIGHT, Config.Window.BASE_TITLE, NULL, NULL)
+        this.window = glfwCreateWindow(Config.Window.WIDTH, Config.Window.HEIGHT, Config.Window.BASE_TITLE, NULL, NULL)
         if (window == NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
 
         keyCallback = object : GLFWKeyCallback() {
             override fun invoke(window: Long, key: Int, scancode: Int, action: Int, mods: Int) {
-                if (key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE) {
-                    GLFW.glfwSetWindowShouldClose(window, GL11.GL_TRUE)
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    glfwSetWindowShouldClose(window, GL_TRUE)
                 }
             }
         }
-        GLFW.glfwSetKeyCallback(window, keyCallback)
+        glfwSetKeyCallback(window, keyCallback)
 
-        val videoMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
-        GLFW.glfwSetWindowPos(
+        val videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor())
+        glfwSetWindowPos(
             window,
             (GLFWvidmode.width(videoMode) - Config.Window.WIDTH) / 2,
             (GLFWvidmode.height(videoMode) - Config.Window.HEIGHT) / 2
         );
 
-        GLFW.glfwMakeContextCurrent(window)
-        GLFW.glfwSwapInterval(1)
+        glfwMakeContextCurrent(window)
+        glfwSwapInterval(1)
 
-        GLFW.glfwShowWindow(window)
+        glfwShowWindow(window)
 
         // Timer and Game initialization
         Timer.init()
@@ -92,21 +96,21 @@ object Core {
     fun loop() {
         GLContext.createFromCurrent()
 
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
 
-        while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
+        while (glfwWindowShouldClose(window) == GL_FALSE) {
             // Update game
-            GLFW.glfwPollEvents()
+            glfwPollEvents()
             game.update(Timer.getDelta())
 
             // FPS
             Timer.update()
-            GLFW.glfwSetWindowTitle(window, Config.Window.BASE_TITLE + " - FPS: " + Timer.fps)
+            glfwSetWindowTitle(window, Config.Window.BASE_TITLE + " - FPS: " + Timer.fps)
 
             // Graphics
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT or GL11.GL_DEPTH_BUFFER_BIT)
+            glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
             game.render()
-            GLFW.glfwSwapBuffers(window)
+            glfwSwapBuffers(window)
         }
     }
 
@@ -118,11 +122,11 @@ object Core {
 
         try {
             // Destroy window
-            GLFW.glfwDestroyWindow(window)
+            glfwDestroyWindow(window)
             keyCallback.release()
         } finally {
             // Stop GLFW entirely
-            GLFW.glfwTerminate()
+            glfwTerminate()
             errorCallback.release()
         }
     }

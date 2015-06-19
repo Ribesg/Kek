@@ -4,7 +4,10 @@ import fr.ribesg.kek.api.Config
 import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
 import fr.ribesg.kek.gl
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.GL_POINTS
+import org.lwjgl.opengl.GL11.glColor3f
+import org.lwjgl.opengl.GL11.glPointSize
+import org.lwjgl.opengl.GL11.glVertex2f
 
 /**
  * A demonstration Game.
@@ -21,25 +24,25 @@ public class DemoGame : Game() {
         // Draw a rainbow triangle
         entities.add(object : Entity {
             override fun render() = gl {
-                GL11.glColor3f(1f, 0f, 0f)
-                GL11.glVertex2f(-.5f, -.5f)
+                glColor3f(1f, 0f, 0f)
+                glVertex2f(-.5f, -.5f)
 
-                GL11.glColor3f(0f, 1f, 0f)
-                GL11.glVertex2f(.5f, -.5f)
+                glColor3f(0f, 1f, 0f)
+                glVertex2f(.5f, -.5f)
 
-                GL11.glColor3f(0f, 0f, 1f)
-                GL11.glVertex2f(0f, .75f)
+                glColor3f(0f, 0f, 1f)
+                glVertex2f(0f, .75f)
             }
         })
 
         // Draw a point
         entities.add(object : Entity {
             override fun render() {
-                GL11.glPointSize(5f)
+                glPointSize(5f)
 
-                gl(GL11.GL_POINTS) {
-                    GL11.glColor3f(1f, 1f, 1f)
-                    GL11.glVertex2f(0f, 0f)
+                gl(GL_POINTS) {
+                    glColor3f(1f, 1f, 1f)
+                    glVertex2f(0f, 0f)
                 }
             }
         })

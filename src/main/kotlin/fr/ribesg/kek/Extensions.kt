@@ -1,13 +1,15 @@
 package fr.ribesg.kek
 
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.GL_TRIANGLES
+import org.lwjgl.opengl.GL11.glBegin
+import org.lwjgl.opengl.GL11.glEnd
 
 /**
  * @author Ribesg
  */
 
-fun gl(mode: Int = GL11.GL_TRIANGLES, f: () -> Unit) {
-    GL11.glBegin(mode)
+fun gl(mode: Int = GL_TRIANGLES, f: () -> Unit) {
+    glBegin(mode)
     f()
-    GL11.glEnd()
+    glEnd()
 }
