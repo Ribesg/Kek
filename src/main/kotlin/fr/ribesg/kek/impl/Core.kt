@@ -92,7 +92,6 @@ object Core {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
 
         while (GLFW.glfwWindowShouldClose(window) == GL11.GL_FALSE) {
-
             // Update game
             GLFW.glfwPollEvents()
             game.update(Timer.getDelta())

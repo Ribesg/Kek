@@ -11,7 +11,6 @@ import org.lwjgl.opengl.GL11
 public class DemoGame : Game() {
 
     override fun init() {
-
         // Draw a rainbow triangle
         entities.add(object : Entity {
             override fun render() = gl {
@@ -37,7 +36,6 @@ public class DemoGame : Game() {
                 }
             }
         })
-
     }
 
 }
