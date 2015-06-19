@@ -56,6 +56,10 @@ object Core {
         }
 
         glfwDefaultWindowHints()
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE)
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE)
 
@@ -85,6 +89,8 @@ object Core {
 
         glfwShowWindow(window)
 
+        GLContext.createFromCurrent()
+
         // Timer and Game initialization
         Timer.init()
         game.init()
@@ -94,7 +100,6 @@ object Core {
      * Runs the main game loop.
      */
     fun loop() {
-        GLContext.createFromCurrent()
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
 
