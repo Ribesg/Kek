@@ -31,20 +31,16 @@ public class DemoGame : Game() {
         private val shader: ShaderProgram
 
         init {
-            vao = Vao()
-            vao.bind()
 
             val vertexBuffer = BufferUtils.createFloatBuffer(2 * 3)
             vertexBuffer.put(floatArrayOf(-.5f, -.5f))
-            vertexBuffer.put(floatArrayOf(.5f, -.5f))
             vertexBuffer.put(floatArrayOf(0f, .75f))
+            vertexBuffer.put(floatArrayOf(.5f, -.5f))
             vertexBuffer.flip()
 
             val vertexVbo = Vbo()
             vertexVbo.bind(GL_ARRAY_BUFFER)
             vertexVbo.data(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW)
-            glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0)
-            glEnableVertexAttribArray(0)
 
             val colorBuffer = BufferUtils.createFloatBuffer(3 * 3)
             colorBuffer.put(floatArrayOf(1f, 0f, 0f))
@@ -55,10 +51,19 @@ public class DemoGame : Game() {
             val colorVbo = Vbo()
             colorVbo.bind(GL_ARRAY_BUFFER)
             colorVbo.data(GL_ARRAY_BUFFER, colorBuffer, GL_STATIC_DRAW)
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0)
-            glEnableVertexAttribArray(1)
 
             Vbo.unbind(GL_ARRAY_BUFFER)
+
+            vao = Vao()
+            vao.bind()
+
+            glEnableVertexAttribArray(0)
+            vertexVbo.bind(GL_ARRAY_BUFFER)
+            glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0)
+
+            glEnableVertexAttribArray(1)
+            colorVbo.bind(GL_ARRAY_BUFFER)
+            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0)
 
             shader = ShaderProgram()
             shader.attach(Shader(GL_VERTEX_SHADER, "demo_vertex.glsl"))
