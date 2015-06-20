@@ -11,7 +11,8 @@ public class ShaderProgram {
 
     public companion object {
 
-        public fun useNone(): Unit = glUseProgram(0)
+        public fun useNone(): Unit
+            = glUseProgram(0)
 
     }
 
@@ -28,7 +29,8 @@ public class ShaderProgram {
         check()
     }
 
-    public fun use(): Unit = glUseProgram(id)
+    public fun use(): Unit
+        = glUseProgram(id)
 
     public fun delete(): Unit {
         glUseProgram(0)

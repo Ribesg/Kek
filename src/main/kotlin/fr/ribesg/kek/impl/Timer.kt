@@ -19,7 +19,8 @@ object Timer {
         lastLoopTime = getTime()
     }
 
-    fun getTime(): Double = glfwGetTime()
+    fun getTime(): Double
+        = glfwGetTime()
 
 
     fun getDelta(): Float {

@@ -14,11 +14,14 @@ public class Vao {
 
     public companion object {
 
-        public fun enable(): Unit = glEnableClientState(GL_VERTEX_ARRAY)
+        public fun enable(): Unit
+            = glEnableClientState(GL_VERTEX_ARRAY)
 
-        public fun disable(): Unit = glDisableClientState(GL_VERTEX_ARRAY)
+        public fun disable(): Unit
+            = glDisableClientState(GL_VERTEX_ARRAY)
 
-        public fun unbind(): Unit = glBindVertexArray(0)
+        public fun unbind(): Unit
+            = glBindVertexArray(0)
 
     }
 

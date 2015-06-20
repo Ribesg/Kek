@@ -75,6 +75,11 @@ public class DemoGame : Game() {
             Vao.unbind()
             ShaderProgram.useNone()
         }
+
+        override fun free() {
+            vao.delete()
+            shader.delete()
+        }
     }
 
     override fun configure() {

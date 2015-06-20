@@ -1,5 +1,6 @@
 package fr.ribesg.kek.api
 
+import fr.ribesg.kek.api.gfx.Entity
 import fr.ribesg.kek.api.gfx.Layer
 import fr.ribesg.kek.impl.Core
 
@@ -32,7 +33,8 @@ public abstract class Game : Layer() {
      *
      * Here we should close resources and clean everything like threads.
      */
-    public open fun end(): Unit = Unit
+    public open fun end(): Unit
+        = entities.forEach(Entity::free)
 
     // ------------------------------------------ //
 

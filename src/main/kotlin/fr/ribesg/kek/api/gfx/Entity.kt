@@ -17,4 +17,9 @@ public interface Entity {
      */
     public open fun update(delta: Float): Unit = Unit
 
+    /**
+     * Frees this Entity.
+     */
+    public open fun free(): Unit = Unit
+
 }

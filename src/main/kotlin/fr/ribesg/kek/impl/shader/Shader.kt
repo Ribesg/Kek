@@ -20,7 +20,8 @@ public class Shader(type: Int, name: String) {
         check()
     }
 
-    public fun delete(): Unit = glDeleteShader(id)
+    public fun delete(): Unit
+        = glDeleteShader(id)
 
     private fun check() {
         if (glGetShaderi(id, GL_COMPILE_STATUS) != GL_TRUE) {

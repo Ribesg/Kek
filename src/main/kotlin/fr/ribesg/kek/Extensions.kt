@@ -15,4 +15,5 @@ fun gl(mode: Int = GL_TRIANGLES, f: () -> Unit) {
     glEnd()
 }
 
-fun res(path: Path): String = ClassLoader.getSystemResourceAsStream(path.toString()).reader().use { it.readText() }
+fun res(path: Path): String
+    = ClassLoader.getSystemResourceAsStream(path.toString()).reader().use { it.readText() }
