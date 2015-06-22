@@ -101,7 +101,7 @@ object Core {
      */
     fun loop() {
 
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
 
         while (glfwWindowShouldClose(window) == GL_FALSE) {
             // Update game
