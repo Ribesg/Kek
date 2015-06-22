@@ -3,6 +3,7 @@ package fr.ribesg.kek.impl.shader
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
 import java.util.LinkedList
+import kotlin.properties.Delegates
 
 /**
  * @author Ribesg
@@ -10,6 +11,13 @@ import java.util.LinkedList
 public class ShaderProgram {
 
     public companion object {
+
+        public val base: ShaderProgram by Delegates.lazy {
+            ShaderProgram.of(
+                Shader.of("base.vert"),
+                Shader.of("base.frag")
+            )
+        }
 
         public fun of(vararg shaders: Shader): ShaderProgram {
             assert(shaders.isNotEmpty(), "A shader program is composed of at least one shader")

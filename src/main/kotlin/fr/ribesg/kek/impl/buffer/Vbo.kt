@@ -1,14 +1,7 @@
 package fr.ribesg.kek.impl.buffer
 
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY
-import org.lwjgl.opengl.GL11.glDisableClientState
-import org.lwjgl.opengl.GL11.glEnableClientState
 import org.lwjgl.opengl.GL15.*
-import org.lwjgl.opengl.GL15.glBindBuffer
-import org.lwjgl.opengl.GL15.glBufferData
-import org.lwjgl.opengl.GL15.glDeleteBuffers
-import org.lwjgl.opengl.GL15.glGenBuffers
 import java.nio.FloatBuffer
 
 /**
