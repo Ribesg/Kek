@@ -5,18 +5,14 @@ import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
 import fr.ribesg.kek.impl.buffer.Vao
 import fr.ribesg.kek.impl.buffer.Vbo
-import fr.ribesg.kek.impl.shader.Shader
 import fr.ribesg.kek.impl.shader.ShaderProgram
-import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.GL_FLOAT
 import org.lwjgl.opengl.GL11.GL_TRIANGLES
 import org.lwjgl.opengl.GL11.glDrawArrays
 import org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER
-import org.lwjgl.opengl.GL15.GL_STATIC_DRAW
-import org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER
-import org.lwjgl.opengl.GL20.GL_VERTEX_SHADER
 import org.lwjgl.opengl.GL20.glEnableVertexAttribArray
 import org.lwjgl.opengl.GL20.glVertexAttribPointer
+import java.nio.file.Paths
 
 /**
  * A demonstration Game.
@@ -32,27 +28,17 @@ public class DemoGame : Game() {
 
         init {
 
-            val vertexBuffer = BufferUtils.createFloatBuffer(2 * 3)
-            vertexBuffer.put(floatArrayOf(-.5f, -.5f))
-            vertexBuffer.put(floatArrayOf(0f, .75f))
-            vertexBuffer.put(floatArrayOf(.5f, -.5f))
-            vertexBuffer.flip()
+            val vertexVbo = Vbo.of(
+                0f, .5f,
+                -.43f, -.25f,
+                .43f, -.25f
+            )
 
-            val vertexVbo = Vbo()
-            vertexVbo.bind(GL_ARRAY_BUFFER)
-            vertexVbo.data(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW)
-
-            val colorBuffer = BufferUtils.createFloatBuffer(3 * 3)
-            colorBuffer.put(floatArrayOf(1f, 0f, 0f))
-            colorBuffer.put(floatArrayOf(0f, 1f, 0f))
-            colorBuffer.put(floatArrayOf(0f, 0f, 1f))
-            colorBuffer.flip()
-
-            val colorVbo = Vbo()
-            colorVbo.bind(GL_ARRAY_BUFFER)
-            colorVbo.data(GL_ARRAY_BUFFER, colorBuffer, GL_STATIC_DRAW)
-
-            Vbo.unbind(GL_ARRAY_BUFFER)
+            val colorVbo = Vbo.of(
+                1f, 0f, 0f,
+                0f, 1f, 0f,
+                0f, 0f, 1f
+            )
 
             vao = Vao()
             vao.bind()
@@ -65,10 +51,10 @@ public class DemoGame : Game() {
             colorVbo.bind(GL_ARRAY_BUFFER)
             glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0)
 
-            shader = ShaderProgram()
-            shader.attach(Shader(GL_VERTEX_SHADER, "demo_vertex.glsl"))
-            shader.attach(Shader(GL_FRAGMENT_SHADER, "demo_fragment.glsl"))
-            shader.link()
+            shader = ShaderProgram.of(
+                Paths.get("demo", "rotate_180.vert"),
+                Paths.get("demo", "invert_colors.frag")
+            )
         }
 
         override fun render() {
@@ -88,6 +74,8 @@ public class DemoGame : Game() {
     }
 
     override fun configure() {
+        Config.Window.WIDTH = 768
+        Config.Window.HEIGHT = 768
         Config.Window.BASE_TITLE = "DemoGame"
     }
 

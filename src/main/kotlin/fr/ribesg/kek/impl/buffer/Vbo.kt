@@ -1,8 +1,10 @@
 package fr.ribesg.kek.impl.buffer
 
+import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY
 import org.lwjgl.opengl.GL11.glDisableClientState
 import org.lwjgl.opengl.GL11.glEnableClientState
+import org.lwjgl.opengl.GL15.*
 import org.lwjgl.opengl.GL15.glBindBuffer
 import org.lwjgl.opengl.GL15.glBufferData
 import org.lwjgl.opengl.GL15.glDeleteBuffers
@@ -16,11 +18,18 @@ public class Vbo {
 
     public companion object {
 
-        public fun enable(): Unit
-            = glEnableClientState(GL_VERTEX_ARRAY)
+        public fun of(vararg values: Float): Vbo {
+            val buf = BufferUtils.createFloatBuffer(values.size())
+            buf.put(values)
+            buf.flip()
 
-        public fun disable(): Unit
-            = glDisableClientState(GL_VERTEX_ARRAY)
+            val vbo = Vbo()
+            vbo.bind(GL_ARRAY_BUFFER)
+            vbo.data(GL_ARRAY_BUFFER, buf, GL_STATIC_DRAW)
+            Vbo.unbind(GL_ARRAY_BUFFER)
+
+            return vbo
+        }
 
         public fun unbind(to: Int): Unit
             = glBindBuffer(to, 0)

@@ -2,6 +2,7 @@ package fr.ribesg.kek.impl.shader
 
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
+import java.nio.file.Path
 import java.util.LinkedList
 
 /**
@@ -10,6 +11,16 @@ import java.util.LinkedList
 public class ShaderProgram {
 
     public companion object {
+
+        public fun of(vararg shaders: Path): ShaderProgram {
+            assert(shaders.isNotEmpty(), "A shader program is composed of at least one shader")
+            val res = ShaderProgram()
+            for (p in shaders) {
+                res.attach(Shader.of(p))
+            }
+            res.link()
+            return res
+        }
 
         public fun useNone(): Unit
             = glUseProgram(0)
@@ -38,6 +49,7 @@ public class ShaderProgram {
             glDetachShader(id, s.id)
             s.delete()
         }
+        shaders.clear()
         glDeleteProgram(id)
     }
 
