@@ -81,6 +81,7 @@
                      <artifactSet>
                         <includes>
                            <include>org.jetbrains.kotlin:*</include>
+                           <include>local:lwjgl3:*</include>
                         </includes>
                      </artifactSet>
                      <minimizeJar>true</minimizeJar>

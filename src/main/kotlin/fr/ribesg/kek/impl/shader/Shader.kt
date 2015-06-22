@@ -4,28 +4,27 @@ import fr.ribesg.kek.extensions.res
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER
-import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
  * @author Ribesg
  */
-public class Shader(type: Int, path: Path) {
+public class Shader(type: Int, vararg path: String) {
 
     public companion object {
 
         /**
          * This "static" constructor guesses the type of Shader from the file extension.
          */
-        public fun of(path: Path): Shader {
+        public fun of(vararg path: String): Shader {
             val type = when {
-                path.toString().endsWith(".vert") -> GL_VERTEX_SHADER
-                path.toString().endsWith(".frag") -> GL_FRAGMENT_SHADER
-                path.toString().endsWith(".geom") -> GL_GEOMETRY_SHADER
-                else                              ->
+                path.last().endsWith(".vert") -> GL_VERTEX_SHADER
+                path.last().endsWith(".frag") -> GL_FRAGMENT_SHADER
+                path.last().endsWith(".geom") -> GL_GEOMETRY_SHADER
+                else                          ->
                     throw IllegalArgumentException("Path to invalid shader file: " + path)
             }
-            return Shader(type, path)
+            return Shader(type, *path)
         }
 
     }
@@ -34,7 +33,7 @@ public class Shader(type: Int, path: Path) {
 
     init {
         id = glCreateShader(type)
-        glShaderSource(id, res(Paths.get("shaders").resolve(path)))
+        glShaderSource(id, res(Paths.get("/shaders", *path)))
         glCompileShader(id)
 
         check()

@@ -5,6 +5,7 @@ import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
 import fr.ribesg.kek.impl.buffer.Vao
 import fr.ribesg.kek.impl.buffer.Vbo
+import fr.ribesg.kek.impl.shader.Shader
 import fr.ribesg.kek.impl.shader.ShaderProgram
 import org.lwjgl.opengl.GL11.GL_FLOAT
 import org.lwjgl.opengl.GL11.GL_TRIANGLES
@@ -12,7 +13,6 @@ import org.lwjgl.opengl.GL11.glDrawArrays
 import org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER
 import org.lwjgl.opengl.GL20.glEnableVertexAttribArray
 import org.lwjgl.opengl.GL20.glVertexAttribPointer
-import java.nio.file.Paths
 
 /**
  * A demonstration Game.
@@ -52,8 +52,8 @@ public class DemoGame : Game() {
             glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0)
 
             shader = ShaderProgram.of(
-                Paths.get("demo", "rotate_180.vert"),
-                Paths.get("demo", "invert_colors.frag")
+                Shader.of("demo", "rotate_180.vert"),
+                Shader.of("demo", "invert_colors.frag")
             )
         }
 
