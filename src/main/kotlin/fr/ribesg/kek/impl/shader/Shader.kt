@@ -4,8 +4,6 @@ import fr.ribesg.kek.extensions.res
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER
-import java.nio.file.Path
-import java.nio.file.Paths
 
 /**
  * @author Ribesg
@@ -34,8 +32,8 @@ public class Shader(type: Int, vararg path: String) {
 
     init {
         id = glCreateShader(type)
-        val resPath = Paths.get("/shaders", *path)
-        glShaderSource(id, res(resPath))
+        val resPath = arrayOf("shaders", *path)
+        glShaderSource(id, res(*resPath))
         glCompileShader(id)
 
         check(resPath)
@@ -44,7 +42,7 @@ public class Shader(type: Int, vararg path: String) {
     public fun delete(): Unit
         = glDeleteShader(id)
 
-    private fun check(path: Path) {
+    private fun check(path: Array<String>) {
         if (glGetShaderi(id, GL_COMPILE_STATUS) != GL_TRUE) {
             throw RuntimeException("(while compiling $path): " + glGetShaderInfoLog(id))
         }
