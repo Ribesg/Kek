@@ -1,6 +1,6 @@
 package fr.ribesg.kek.impl.shader
 
-import fr.ribesg.kek.extensions.res
+import fr.ribesg.kek.api.util.ResourceUtils
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER
@@ -32,19 +32,19 @@ public class Shader(type: Int, vararg path: String) {
 
     init {
         id = glCreateShader(type)
-        val resPath = arrayOf("shaders", *path)
-        glShaderSource(id, res(*resPath))
+        glShaderSource(id, ResourceUtils.getShader(path))
         glCompileShader(id)
 
-        check(resPath)
+        check(path)
     }
 
     public fun delete(): Unit
         = glDeleteShader(id)
 
-    private fun check(path: Array<String>) {
+    private fun check(path: Array<out String>) {
         if (glGetShaderi(id, GL_COMPILE_STATUS) != GL_TRUE) {
-            throw RuntimeException("(while compiling $path): " + glGetShaderInfoLog(id))
+            throw RuntimeException("(while compiling ${ResourceUtils.shadersRoot}/$path): " + glGetShaderInfoLog(id))
         }
     }
+
 }
