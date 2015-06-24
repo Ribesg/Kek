@@ -38,8 +38,21 @@
       <finalName>${project.name}</finalName>
       <defaultGoal>clean package</defaultGoal>
       <sourceDirectory>${basedir}/src/main/kotlin</sourceDirectory>
+      <resources>
+         <!-- Defining this here overrides default value... -->
+         <resource>
+            <!-- ...so we have to redefine the default resources folder... -->
+            <directory>${basedir}/src/main/resources</directory>
+         </resource>
+         <resource>
+            <!-- ...to be able to add the natives to the resources. -->
+            <directory>${basedir}/lwjgl3/lwjgl/native</directory>
+            <targetPath>natives</targetPath>
+         </resource>
+      </resources>
       <plugins>
          <plugin>
+            <!-- Compile Kotlin sources to Java classes -->
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-maven-plugin</artifactId>
             <version>${kotlin.version}</version>
@@ -59,6 +72,7 @@
             </executions>
          </plugin>
          <plugin>
+            <!-- Target Java 6 -->
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.1</version>
             <configuration>
@@ -68,6 +82,7 @@
             </configuration>
          </plugin>
          <plugin>
+            <!-- Shade libraries into the final jar -->
             <artifactId>maven-shade-plugin</artifactId>
             <version>2.2</version>
             <executions>
@@ -89,6 +104,7 @@
             </executions>
          </plugin>
          <plugin>
+            <!-- Make the jar executable by specifying the main class -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>2.4</version>
@@ -102,6 +118,7 @@
             </configuration>
          </plugin>
          <plugin>
+            <!-- Add ability for Maven to execute the program -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.4.0</version>
