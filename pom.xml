@@ -11,26 +11,39 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <kotlin.version>0.12.613</kotlin.version>
+      <lwjgl.version>3.0.0a</lwjgl.version>
       <mainClass>fr.ribesg.kek.demo.DemoPackage</mainClass>
    </properties>
 
-   <repositories>
-      <repository>
-         <id>project-local-repo</id>
-         <url>file://${project.basedir}/lwjgl3/repo</url>
-      </repository>
-   </repositories>
-
    <dependencies>
-      <dependency>
-         <groupId>local</groupId>
-         <artifactId>lwjgl3</artifactId>
-         <version>3.0.0a-49</version>
-      </dependency>
       <dependency>
          <groupId>org.jetbrains.kotlin</groupId>
          <artifactId>kotlin-stdlib</artifactId>
          <version>${kotlin.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.lwjgl</groupId>
+         <artifactId>lwjgl</artifactId>
+         <version>${lwjgl.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.lwjgl</groupId>
+         <artifactId>lwjgl-platform</artifactId>
+         <version>${lwjgl.version}</version>
+         <classifier>natives-windows</classifier>
+      </dependency>
+      <dependency>
+         <groupId>org.lwjgl</groupId>
+         <artifactId>lwjgl-platform</artifactId>
+         <version>${lwjgl.version}</version>
+         <classifier>natives-osx</classifier>
+      </dependency>
+      <dependency>
+         <groupId>org.lwjgl</groupId>
+         <artifactId>lwjgl-platform</artifactId>
+         <version>${lwjgl.version}</version>
+         <classifier>natives-linux</classifier>
       </dependency>
    </dependencies>
 
@@ -38,18 +51,6 @@
       <finalName>${project.name}</finalName>
       <defaultGoal>clean package</defaultGoal>
       <sourceDirectory>${basedir}/src/main/kotlin</sourceDirectory>
-      <resources>
-         <!-- Defining this here overrides default value... -->
-         <resource>
-            <!-- ...so we have to redefine the default resources folder... -->
-            <directory>${basedir}/src/main/resources</directory>
-         </resource>
-         <resource>
-            <!-- ...to be able to add the natives to the resources. -->
-            <directory>${basedir}/lwjgl3/lwjgl/native</directory>
-            <targetPath>natives</targetPath>
-         </resource>
-      </resources>
       <plugins>
          <plugin>
             <!-- Compile Kotlin sources to Java classes -->
@@ -95,10 +96,10 @@
                      <artifactSet>
                         <includes>
                            <include>org.jetbrains.kotlin:*</include>
-                           <include>local:lwjgl3:*</include>
+                           <include>org.lwjgl:*</include>
                         </includes>
                      </artifactSet>
-                     <minimizeJar>true</minimizeJar>
+                     <minimizeJar>false</minimizeJar>
                   </configuration>
                </execution>
             </executions>

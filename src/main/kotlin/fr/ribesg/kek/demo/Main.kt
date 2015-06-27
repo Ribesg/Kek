@@ -15,7 +15,7 @@ object Main {
             // Extract LWJGL3 natives to a temporary folder and use those
             tmpDir = Files.createTempDirectory("kek")
             println("Temporary directory created at $tmpDir")
-            this.unzipNatives(JarFile(path), tmpDir)
+            unzipNatives(JarFile(path), tmpDir)
             Runtime.getRuntime().addShutdownHook(Thread(Runnable {
                 if (tmpDir != null) {
                     // FIXME Can't remove lwjgl.dll :(
@@ -31,7 +31,7 @@ object Main {
         } else {
             // Seems that we're in a development context (in IDE or mvn exec), use repository natives
             tmpDir = null
-            System.setProperty("org.lwjgl.librarypath", "lwjgl3/lwjgl/native")
+            System.setProperty("org.lwjgl.librarypath", "lib/natives")
             println("Running in dev mode")
         }
 
@@ -44,14 +44,13 @@ object Main {
     }
 
     private fun unzipNatives(jarFile: JarFile, to: Path) {
-        assert(jarFile.getEntry("natives")?.isDirectory() ?: false, "Natives folder missing from jar file!")
         Files.createDirectory(to.resolve("natives"))
         jarFile.stream().filter { entry ->
-            entry.getName().matches("natives/.+".toRegex())
+            !entry.isDirectory() && !entry.getName().contains('/')
         }.forEach { entry ->
             jarFile.getInputStream(entry).use { inputStream ->
                 println("\tExtracting " + entry.getName())
-                Files.copy(inputStream, to.resolve(entry.getName()))
+                Files.copy(inputStream, to.resolve("natives").resolve(entry.getName()))
             }
         }
     }
