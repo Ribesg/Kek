@@ -1,4 +1,4 @@
-package fr.ribesg.kek.impl.buffer
+package fr.ribesg.kek.impl.wrapper.buffer
 
 import org.lwjgl.opengl.GL30.glBindVertexArray
 import org.lwjgl.opengl.GL30.glDeleteVertexArrays
@@ -16,7 +16,7 @@ public class Vao {
 
     }
 
-    val id: Int = glGenVertexArrays()
+    public val id: Int = glGenVertexArrays()
 
     public fun bind(): Unit
         = glBindVertexArray(id)

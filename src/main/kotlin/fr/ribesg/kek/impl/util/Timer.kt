@@ -1,4 +1,4 @@
-package fr.ribesg.kek.impl
+package fr.ribesg.kek.impl.util
 
 import org.lwjgl.glfw.GLFW.glfwGetTime
 

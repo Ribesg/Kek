@@ -3,10 +3,10 @@ package fr.ribesg.kek.demo
 import fr.ribesg.kek.api.Config
 import fr.ribesg.kek.api.Game
 import fr.ribesg.kek.api.gfx.Entity
-import fr.ribesg.kek.impl.buffer.Vao
-import fr.ribesg.kek.impl.buffer.Vbo
-import fr.ribesg.kek.impl.shader.Shader
-import fr.ribesg.kek.impl.shader.ShaderProgram
+import fr.ribesg.kek.impl.wrapper.buffer.Vao
+import fr.ribesg.kek.impl.wrapper.buffer.Vbo
+import fr.ribesg.kek.impl.wrapper.shader.Shader
+import fr.ribesg.kek.impl.wrapper.shader.ShaderProgram
 import org.lwjgl.opengl.GL11.GL_FLOAT
 import org.lwjgl.opengl.GL11.GL_LINES
 import org.lwjgl.opengl.GL11.GL_TRIANGLES

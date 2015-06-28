@@ -1,4 +1,4 @@
-package fr.ribesg.kek.impl.buffer
+package fr.ribesg.kek.impl.wrapper.buffer
 
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL15.*
@@ -29,7 +29,7 @@ public class Vbo {
 
     }
 
-    val id: Int = glGenBuffers()
+    public val id: Int = glGenBuffers()
 
     public fun bind(to: Int): Unit
         = glBindBuffer(to, id)

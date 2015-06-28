@@ -1,4 +1,4 @@
-package fr.ribesg.kek.impl.shader
+package fr.ribesg.kek.impl.wrapper.shader
 
 import fr.ribesg.kek.api.util.ResourceUtils
 import org.lwjgl.opengl.GL11.GL_TRUE
@@ -28,7 +28,7 @@ public class Shader(type: Int, vararg path: String) {
 
     }
 
-    val id: Int
+    public val id: Int
 
     init {
         id = glCreateShader(type)

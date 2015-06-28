@@ -1,4 +1,4 @@
-package fr.ribesg.kek.impl.shader
+package fr.ribesg.kek.impl.wrapper.shader
 
 import org.lwjgl.opengl.GL11.GL_TRUE
 import org.lwjgl.opengl.GL20.*
@@ -34,8 +34,8 @@ public class ShaderProgram {
 
     }
 
-    val id: Int = glCreateProgram()
-    val shaders: MutableList<Shader> = LinkedList()
+    public val id: Int = glCreateProgram()
+    private val shaders: MutableList<Shader> = LinkedList()
 
     public fun attach(s: Shader): Unit {
         glAttachShader(id, s.id)

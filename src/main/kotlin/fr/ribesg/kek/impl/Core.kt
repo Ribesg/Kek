@@ -2,6 +2,7 @@ package fr.ribesg.kek.impl
 
 import fr.ribesg.kek.api.Config
 import fr.ribesg.kek.api.Game
+import fr.ribesg.kek.impl.util.Timer
 import org.lwjgl.glfw.Callbacks
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
